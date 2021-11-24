@@ -60,33 +60,33 @@ class Chain:
             block.mine(self.difficulty)
             self.add_to_chain(block)
 
-#number_of_sim = 50
-number_of_sim = 18
+number_of_sim = 50
+#number_of_sim = 18  
 trend = np.zeros((number_of_sim,1))
 avgnonces = np.zeros((number_of_sim,1))
 
-# start_time = time.time()
+#start_time = time.time()
 
-# df = pd.read_csv(fileName, sep=',', header = 0)
-# data = df.to_numpy()
+df = pd.read_csv(fileName, sep=',', header = 0)
+data = df.to_numpy()
 
-# chain = Chain(10)
+#chain = Chain(10)
 
 for j in range(number_of_sim):
-    #print("Number of blocks: {}".format((j+1)*20))
-    print("Difficulty level: {}".format(j))
+    print("Number of blocks: {}".format((j+1)*20))
+    #print("Difficulty level: {}".format(j))
     start_time = time.time()
 
     df = pd.read_csv(fileName, sep=',', header = 0)
     data = df.to_numpy()
 
-    #chain = Chain(10)
-    chain = Chain(j)
+    chain = Chain(10)
+    #chain = Chain(j)
     
     #for i in range(np.shape(data)[0]):
-    #for i in range((j+1)*20):
-    nonces = np.zeros((100,1))
-    for i in range(100):
+    for i in range((j+1)*20):
+    #nonces = np.zeros((100,1))
+    #for i in range(100):
         
         data1 = "Node {} kWa: {}\n".format(data[i,0], data[i,1])
         data2 = "Node {} kVARa: {}\n".format(data[i,0], data[i,2])
@@ -97,7 +97,7 @@ for j in range(number_of_sim):
     
         chain.add_to_pool([data1,data2,data3,data4,data5,data6])
         chain.mine()
-        nonces[i] = chain.blocks[i+1].nonce
+        #nonces[i] = chain.blocks[i+1].nonce
     
 
         #adding a delay between peer-to-peer
@@ -130,9 +130,9 @@ for j in range(number_of_sim):
     print("Time elapsed:",time_elapsed, "seconds")
     
     trend[j] = time_elapsed
-    avgnonces[j] = np.average(nonces)
+    #avgnonces[j] = np.average(nonces)
     
-    print("Average number of nonces: {}".format(avgnonces[j]))
+    #print("Average number of nonces: {}".format(avgnonces[j]))
     
 workbook = xlsxwriter.Workbook('TempFile.xlsx')
 worksheet = workbook.add_worksheet()
